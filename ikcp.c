@@ -210,7 +210,7 @@ static int ikcp_output(ikcpcb *kcp, const void *data, int size)
 // output queue
 void ikcp_qprint(const char *name, const struct IQUEUEHEAD *head)
 {
-#if 1
+#if 0
 	const struct IQUEUEHEAD *p;
 	printf("<%s>: [", name);
 	for (p = head->next; p != head; p = p->next) {
