@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include <string.h>
 
 #include "ikcp.h"
 
@@ -12,6 +13,13 @@
 #include <windows.h>
 #elif !defined(__unix)
 #define __unix
+#endif
+
+#ifdef __unix
+#include <unistd.h>
+#include <sys/time.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 #endif
 
 /* get system time */
