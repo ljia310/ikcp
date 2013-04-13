@@ -60,7 +60,7 @@ void test(int mode)
 		ikcp_nodelay(kcp2, 0, 10, 0, 0);
 	}
 	else if (mode == 1) {
-		// 普通模式，仅仅关闭流控
+		// 普通模式，关闭流控等
 		ikcp_nodelay(kcp1, 0, 10, 0, 1);
 		ikcp_nodelay(kcp2, 0, 10, 0, 1);
 	}	else {
@@ -159,7 +159,7 @@ void test(int mode)
 int main()
 {
 	test(0);	// 默认模式，类似 TCP：正常模式，无快速重传，常规流控
-	test(1);	// 普通模式，其他不变，只是关闭流控
+	test(1);	// 普通模式，关闭流控等
 	test(2);	// 快速模式，所有开关都打开，且关闭流控
 	return 0;
 }
