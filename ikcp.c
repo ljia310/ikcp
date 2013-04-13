@@ -263,6 +263,7 @@ ikcpcb* ikcp_create(IUINT32 conv, void *user)
 	kcp->nrcv_que = 0;
 	kcp->nsnd_que = 0;
 	kcp->state = 0;
+	kcp->acklist = NULL;
 	kcp->ackblock = 0;
 	kcp->ackcount = 0;
 	kcp->rx_srtt = 0;
