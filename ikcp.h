@@ -327,35 +327,48 @@ extern "C" {
 // interface
 //---------------------------------------------------------------------
 
+// create a new kcp control object, 'conv' must equal in two endpoint
+// from the same connection. 'user' will be passed to the output callback
+// output callback can be setup like this: 'kcp->output = my_udp_output'
 ikcpcb* ikcp_create(IUINT32 conv, void *user);
+
+// release kcp control object
 void ikcp_release(ikcpcb *kcp);
 
 int ikcp_recv(ikcpcb *kcp, char *buffer, int len);
 int ikcp_send(ikcpcb *kcp, const char *buffer, int len);
 
+// update state (call it repeatedly, every 10ms-100ms)
+// 'current' - current timestamp in millisec
 void ikcp_update(ikcpcb *kcp, IUINT32 current);
 IUINT32 ikcp_check(const ikcpcb *kcp, IUINT32 current);
 
+// when you received a low level packet (eg. UDP packet), call it
 int ikcp_input(ikcpcb *kcp, const char *data, long size);
 void ikcp_flush(ikcpcb *kcp);
 
 int ikcp_peeksize(const ikcpcb *kcp);
 
+// change MTU size, default is 14000
 int ikcp_setmtu(ikcpcb *kcp, int mtu);
+
+// set maximum window size: sndwnd=32, rcvwnd=32 by default
 int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
+
+// get how many packet is waiting to be sent
 int ikcp_waitsnd(const ikcpcb *kcp);
 
 // fastest: ikcp_nodelay(kcp, 1, 20, 2, 1)
+// nodelay: 0:disable(default), 1:enable
+// interval: internal update timer interval in millisec, default is 100ms 
+// resend: 0:disable fast resend(default), 1:enable fast resend
+// nc: 0:normal congestion control(default), 1:disable congestion control
 int ikcp_nodelay(ikcpcb *kcp, int nodelay, int interval, int resend, int nc);
 
 int ikcp_rcvbuf_count(const ikcpcb *kcp);
 int ikcp_sndbuf_count(const ikcpcb *kcp);
 
 void ikcp_log(ikcpcb *kcp, int mask, const char *fmt, ...);
-
-// redefine allocator
-void ikcp_allocator(void* (*new_malloc)(size_t), void (*new_free)(void*));
-
 
 #ifdef __cplusplus
 }
