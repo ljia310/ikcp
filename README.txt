@@ -96,7 +96,7 @@ TCP是为流量设计的（每秒内可以传输多少KB的数据），讲究的是充分利用带宽。而KCP
    resend ：快速重传模式，默认0关闭，可以设置2（2次ACK跨越将会直接重传）
    nc ：是否关闭流控，默认是0代表不关闭，1代表关闭。
    普通模式：`ikcp_nodelay(kcp, 0, 40, 0, 0); 
-   极速模式： ikcp_nodelay(kcp, 0, 10, 2, 1);
+   极速模式： ikcp_nodelay(kcp, 1, 10, 2, 1);
 
 2. 最大窗口：
  int ikcp_wndsize(ikcpcb *kcp, int sndwnd, int rcvwnd);
